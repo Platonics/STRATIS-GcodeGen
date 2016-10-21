@@ -387,6 +387,14 @@ sub process_layer {
         layer_num => $self->_gcodegen->layer_index,
         layer_z   => $layer->print_z,
     }) . "\n" if $self->print->config->layer_gcode;
+    $gcode .= $self->_gcodegen->placeholder_parser->process($self->print->config->custom_gcode, {
+        layer_num => $self->_gcodegen->layer_index,
+        layer_z   => $layer->print_z,
+    }) . "\n" if ($self->print->config->custom_gcode) && 
+    ($self->print->config->custom_gcode_layer_freq) &&
+    ($self->print->config->custom_gcode_layer_freq != 0) &&
+    ($self->_gcodegen->layer_index != 0) &&
+    ($self->_gcodegen->layer_index % $self->print->config->custom_gcode_layer_freq == 0);
     
     # extrude skirt along raft layers and normal object layers
     # (not along interlaced support material layers)

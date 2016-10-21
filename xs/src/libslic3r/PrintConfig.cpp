@@ -1034,6 +1034,18 @@ PrintConfigDef::build_def() {
     Options["z_offset"].sidetext = "mm";
     Options["z_offset"].cli = "z-offset=f";
     
+    Options["custom_gcode_layer_freq"].type = coInt;
+    Options["custom_gcode_layer_freq"].label = "Custom gcode insertion frequency(number of layers)";
+    Options["custom_gcode_layer_freq"].tooltip = "Custom code is inserted at every custom_gcode_layer_freq layers change, right after the Z move and before the extruder moves to the first layer point. Note that you can use placeholder variables for all Slic3r settings as well as [layer_num] and [layer_z].";
+    Options["custom_gcode_layer_freq"].cli = "custom-gcode-layer-freq=i";
+
+    Options["custom_gcode"].type = coString;
+    Options["custom_gcode"].label = "Custom gcode that is inserted every custom_gcode_layer_freq layers";
+    Options["custom_gcode"].tooltip = "This custom code is inserted at n layer change, right after the Z move and before the extruder moves to the first layer point. Note that you can use placeholder variables for all Slic3r settings as well as [layer_num] and [layer_z].";
+    Options["custom_gcode"].cli = "custom-gcode=s";
+    Options["custom_gcode"].multiline = true;
+    Options["custom_gcode"].full_width = true;
+    Options["custom_gcode"].height = 50;
     return Options;
 };
 
